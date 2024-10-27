@@ -1,0 +1,77 @@
+
+
+Name: libpd
+
+Version: 0.11.0
+
+Description: Pure Data embeddable audio synthesis library, useful as a sound engine in mobile phone apps, games, web pages, and art projects
+
+URL: https://github.com/libpd/libpd
+
+## conditional pure-data/extra externals compilation
+#EXTRA_FILES = $(PD_EXTRA_FILES)
+EXTRA_CFLAGS = -DLIBPD_EXTRA
+#ifeq ($(EXTRA), false)
+#    EXTRA_FILES =
+#    EXTRA_CFLAGS =
+#endif
+#
+## conditional multi-instance support
+MULTI_CFLAGS=
+#ifeq ($(MULTI), true)
+#    MULTI_CFLAGS = -DPDINSTANCE -DPDTHREADS
+#endif
+#
+## conditional double-precision support
+DOUBLE_CFLAGS=
+#ifeq ($(DOUBLE), true)
+#    DOUBLE_CFLAGS = -DPD_FLOATSIZE=64
+endif
+
+# conditional to set numeric locale to default "C"
+LOCALE_CFLAGS=
+#ifeq ($(SETLOCALE), false)
+#    LOCALE_CFLAGS = -DLIBPD_NO_NUMERIC
+#endif
+
+# optimization flags
+OPT_CFLAGS=-ffast-math -funroll-loops -fomit-frame-pointer -O3
+
+prefix=/usr/local
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+# linux only!
+PLATFORM_CFLAGS=-Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -fPIC \
+                -DHAVE_ENDIAN_H -DHAVE_ALLOCA_H -DHAVE_LIBDL
+
+ADDITIONAL_CFLAGS=
+
+Cflags: -DPD -DUSEAPI_DUMMY -DPD_INTERNAL -DHAVE_UNISTD_H \
+         -I./libpd_wrapper -I./libpd_wrapper/util \
+         -I./pure-data/src \
+         -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -fPIC \
+         -DHAVE_ENDIAN_H \
+         ${PLATFORM_CFLAGS} \
+         ${OPT_CFLAGS} ${EXTRA_CFLAGS} ${MULTI_CFLAGS} ${DOUBLE_CFLAGS} \
+         ${LOCALE_CFLAGS} ${ADDITIONAL_CFLAGS}
+
+
+Copyright: Copyright (c) 2024 libpd project authors - Peter Brinkmann, Dan Wilcox, Rich Eakin, Miller Puckette (Pure Data))
+
+Libs: -L${libdir} -lpd
+
+Libs.private: -lm -lpthread
+
+License: Standard Improved BSD License
+
+# Note the maintainer of _this_ file only!
+Maintainer: Adam McCartney <adam@mur.at>
+
+Requires: pd
+
+Requires.private: #TODO
+
+Conflicts: #TODO
+
+Provides: #TODO

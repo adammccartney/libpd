@@ -1,0 +1,3 @@
+(define-ffi-module (ffi libpd)
+  #:pkg-config "libpd"
+  #:include '("../libpd_wrapper/z_libpd.h"))
