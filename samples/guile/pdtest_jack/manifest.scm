@@ -1,0 +1,9 @@
+(specifications->manifest
+  (list
+    "pipewire"
+    "pkg-config"
+    "make"
+    "gcc-toolchain"
+    "coreutils"
+    "guile"
+    "nyacc"))

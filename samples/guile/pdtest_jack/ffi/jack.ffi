@@ -1,0 +1,3 @@
+(define-ffi-module (ffi pipewire)
+  #:pkg-config "libpipewire-0.3"
+  #:include '("jack/jack.h"))
