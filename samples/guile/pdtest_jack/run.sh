@@ -18,5 +18,4 @@ guix shell -m manifest.scm \
     --preserve='^LIBPD_PROJECT_ROOT$' \
     --share=$HOME \
     --share=$LIBPD_PROJECT_ROOT \
-    emacs emacs-geiser \
-    -- guile -l ${GUILE_LIBPD_DIR}/libpd.scm || echo "ERR - unknown error"
+    -- guile -l ${GUILE_LIBPD_DIR}/libpd.scm -s src/main.scm || echo "ERR - unknown error"

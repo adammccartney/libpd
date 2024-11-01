@@ -1,5 +1,7 @@
 (specifications->manifest
   (list
+    "libpd"
+    "pd"
     "pipewire"
     "pkg-config"
     "make"
