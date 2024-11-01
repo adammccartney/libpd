@@ -5,8 +5,8 @@ if ! [ -f "./manifest.scm" ]; then
     exit 1
 fi
 
-LIBPD_PROJECT_ROOT="$(dirname $(pwd))"
-PKG_CONFIG_PATH="${LIBPD_PROJECT_ROOT}":"${PKG_CONFIG_PATH}"
+export LIBPD_PROJECT_ROOT="$(dirname $(pwd))"
+export PKG_CONFIG_PATH="${LIBPD_PROJECT_ROOT}"
 
 guix shell -m manifest.scm \
     --expose=${LIBPD_PROJECT_ROOT} \
@@ -15,5 +15,4 @@ guix shell -m manifest.scm \
     --preserve='^XDG_RUNTIME_DIR$' \
     --preserve='^PKG_CONFIG_PATH$' \
     coreutils \
-    gcc-toolchain \
     -- guild compile-ffi ffi/libpd.ffi || echo "ERR - unknown error"
