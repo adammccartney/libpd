@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 if ! [ -f "./manifest.scm" ]; then
     echo "ERR - expected to find 'manifest.scm' in pwd"
@@ -6,10 +6,7 @@ if ! [ -f "./manifest.scm" ]; then
 fi
 
 export LIBPD_PROJECT_ROOT=$(dirname $(dirname $(dirname $(pwd))))
-export GUILE_LIBPD_DIR=${LIBPD_PROJECT_ROOT}/guile/ffi
-
-# This is needed for picking up our custom pd.
-PKG_CONFIG_PATH=${LIBPD_PROJECT_ROOT}
+export GUILE_LIBPD_DIR=${LIBPD_PROJECT_ROOT}/guile
 
 guix shell -m manifest.scm \
     --preserve='^DISPLAY$' \
@@ -18,5 +15,5 @@ guix shell -m manifest.scm \
     --preserve='^LIBPD_PROJECT_ROOT$' \
     --share=$HOME \
     --share=$LIBPD_PROJECT_ROOT \
-    emacs emacs-geiser \
-    -- guile -l ${GUILE_LIBPD_DIR}/libpd.scm || echo "ERR - unknown error"
+    bash || echo "ERR - unkown error"
+

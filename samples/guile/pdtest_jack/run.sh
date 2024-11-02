@@ -1,21 +1,16 @@
-#!/bin/sh
+#!/usr/bin/bash
+#
+# This file should be run from inside an appropriately configured environment.
+# Such an environment is configured in `guix.sh`.
+# 1. > ./guix.sh
+# 2. [env] ./run.sh
 
-if ! [ -f "./manifest.scm" ]; then
-    echo "ERR - expected to find 'manifest.scm' in pwd"
-    exit 1
+if [ -z "${GUILE_EXTENSIONS_PATH-}" ]; then
+    export GUILE_EXTENSIONS_PATH="$GUIX_ENVIRONMENT/lib"
+else
+    GUILE_EXTENSIONS_PATH="$GUIX_ENVIRONMENT/lib:$GUILE_EXTENSIONS_PATH"
 fi
 
-export LIBPD_PROJECT_ROOT=$(dirname $(dirname $(dirname $(pwd))))
-export GUILE_LIBPD_DIR=${LIBPD_PROJECT_ROOT}/guile/ffi
+guile -l ${GUILE_LIBPD_DIR}/ffi/libpd.scm -s src/main.scm || echo "ERR - unknown error"
 
-# This is needed for picking up our custom pd.
-PKG_CONFIG_PATH=${LIBPD_PROJECT_ROOT}
 
-guix shell -m manifest.scm \
-    --preserve='^DISPLAY$' \
-    --preserve='^XAUTHORITY$' \
-    --preserve='^XDG_RUNTIME_DIR$' \
-    --preserve='^LIBPD_PROJECT_ROOT$' \
-    --share=$HOME \
-    --share=$LIBPD_PROJECT_ROOT \
-    -- guile -l ${GUILE_LIBPD_DIR}/libpd.scm -s src/main.scm || echo "ERR - unknown error"
