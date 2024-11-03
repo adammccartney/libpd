@@ -11,6 +11,8 @@ else
     GUILE_EXTENSIONS_PATH="$GUIX_ENVIRONMENT/lib:$GUILE_EXTENSIONS_PATH"
 fi
 
-guile -l ${GUILE_LIBPD_DIR}/ffi/libpd.scm -s src/main.scm || echo "ERR - unknown error"
-
+guile \
+    -l ${GUILE_LIBPD_DIR}/ffi/libpd.scm \
+    -l $(pwd)/ffi/jack.scm \
+    -s src/main.scm || echo "ERR - could not launch guile"
 

@@ -2,6 +2,7 @@
   (list
     "libpd"
     "pd"
+    "jack2"
     "pipewire"
     "pkg-config"
     "make"
