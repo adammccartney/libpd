@@ -15,5 +15,5 @@ guix shell -m manifest.scm \
     --preserve='^LIBPD_PROJECT_ROOT$' \
     --share=$HOME \
     --share=$LIBPD_PROJECT_ROOT \
-    bash || echo "ERR - unkown error"
+    -- bash || echo "ERR - unkown error"
 
